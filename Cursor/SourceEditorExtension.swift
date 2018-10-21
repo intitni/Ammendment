@@ -12,13 +12,8 @@ import XcodeKit
 class SourceEditorExtension: NSObject, XCSourceEditorExtension {
     
     var commandDefinitions: [[XCSourceEditorCommandDefinitionKey: Any]] {
-        return SourceEditorCommand.CommandType.allCases.map { type in
-            return [
-                .classNameKey: MoveCursor.className(),
-                .identifierKey: type.identifier,
-                .nameKey: type.name
-            ]
-        }
+        return MoveCursor.Command.allCases.map(makeCommandDefinition)
+             + AddCursor.Command.allCases.map(makeCommandDefinition)
     }
     
 }

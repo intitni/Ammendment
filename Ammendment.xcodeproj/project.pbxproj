@@ -22,6 +22,9 @@
 		1356FFF82178D33300BD53AE /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356FFF72178D33300BD53AE /* SourceEditorExtension.swift */; };
 		1356FFFA2178D33300BD53AE /* SourceEditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356FFF92178D33300BD53AE /* SourceEditorCommand.swift */; };
 		1356FFFF2178D33300BD53AE /* Cursor.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1356FFF42178D33200BD53AE /* Cursor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		13B8A4E8217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
+		13B8A4E9217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
+		13B8A4EA217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,7 @@
 		1356FFF92178D33300BD53AE /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
 		1356FFFB2178D33300BD53AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1356FFFC2178D33300BD53AE /* Cursor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cursor.entitlements; sourceTree = "<group>"; };
+		13B8A4E6217C7BBA00095408 /* CommandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 		1356FFC02178D2FF00BD53AE = {
 			isa = PBXGroup;
 			children = (
+				13B8A4E6217C7BBA00095408 /* CommandType.swift */,
 				1356FFCB2178D2FF00BD53AE /* Ammendment */,
 				1356FFE22178D31C00BD53AE /* Selection */,
 				1356FFF62178D33300BD53AE /* Cursor */,
@@ -358,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13B8A4EA217C7C1700095408 /* CommandType.swift in Sources */,
 				1356000B2178D3D000BD53AE /* SourceEditorExtension.swift in Sources */,
 				1356000D2178D3D000BD53AE /* SourceEditorCommand.swift in Sources */,
 			);
@@ -375,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13B8A4E8217C7C1700095408 /* CommandType.swift in Sources */,
 				1356FFE42178D31C00BD53AE /* SourceEditorExtension.swift in Sources */,
 				1356FFE62178D31C00BD53AE /* SourceEditorCommand.swift in Sources */,
 			);
@@ -384,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13B8A4E9217C7C1700095408 /* CommandType.swift in Sources */,
 				1356FFF82178D33300BD53AE /* SourceEditorExtension.swift in Sources */,
 				1356FFFA2178D33300BD53AE /* SourceEditorCommand.swift in Sources */,
 			);

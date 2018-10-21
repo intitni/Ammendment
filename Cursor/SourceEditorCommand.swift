@@ -10,16 +10,17 @@ import Foundation
 import XcodeKit
 
 class MoveCursor: NSObject, XCSourceEditorCommand {
-    
     enum E: Error {
         case noSelectionFound
     }
     
-    enum CommandType: String, CaseIterable {
-        case moveUp = "moveUp"
-        case moveDown = "moveDown"
+    enum Command: String, CaseIterable, CommandType {
+        case moveUp = "moveCursorUp"
+        case moveDown = "moveCursorDown"
         
-        var lineAddition: Int {
+        var commandClassName: String { return MoveCursor.className() }
+        
+        fileprivate var lineAddition: Int {
             switch self {
             case .moveUp: return 5.up
             case .moveDown: return 5.down
@@ -40,7 +41,7 @@ class MoveCursor: NSObject, XCSourceEditorCommand {
     
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         
-        guard let command = CommandType(rawValue: invocation.commandIdentifier) else { fatalError() }
+        guard let command = Command(rawValue: invocation.commandIdentifier.privateIdentifier) else { fatalError() }
         guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
             completionHandler(E.noSelectionFound)
             return
@@ -62,7 +63,41 @@ class MoveCursor: NSObject, XCSourceEditorCommand {
         
         completionHandler(nil)
     }
+}
+
+class AddCursor: NSObject, XCSourceEditorCommand {
+    enum E: Error {
+        case noSelectionFound
+    }
     
+    enum Command: String, CaseIterable, CommandType {
+        case above = "addCursorAbove"
+        case below = "addCursorBelow"
+        
+        var commandClassName: String { return AddCursor.className() }
+        
+        var identifier: String {
+            return rawValue
+        }
+        
+        var name: String {
+            switch self {
+            case .above: return "Add Cursor Above"
+            case .below: return "Add Cursor Below"
+            }
+        }
+    }
+    
+    func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
+        
+        guard let command = Command(rawValue: invocation.commandIdentifier.privateIdentifier) else { fatalError() }
+        guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
+            completionHandler(E.noSelectionFound)
+            return
+        }
+        
+        completionHandler(nil)
+    }
 }
 
 fileprivate extension Int {
