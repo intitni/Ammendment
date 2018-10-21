@@ -24,8 +24,7 @@ func makeCommandDefinition(_ commandType: CommandType) -> [XCSourceEditorCommand
 extension String {
     var privateIdentifier: String {
         guard let r = range(of: identifierPrefix) else { return "" }
-        let nextIndex = index(after: r.upperBound)
-        return String(self[nextIndex...])
+        return String(self[r.upperBound...])
     }
 }
 
