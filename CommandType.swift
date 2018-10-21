@@ -35,3 +35,11 @@ extension XCSourceTextPosition {
         self.column = column
     }
 }
+
+extension XCSourceTextRange {
+    convenience init(start: XCSourceTextPosition, end: XCSourceTextPosition) {
+        self.init()
+        self.start = start
+        self.end = end
+    }
+}

@@ -27,24 +27,21 @@ class SelectLine: NSObject, XCSourceEditorCommand, CommandType {
             
             for currentLine in startLine...endLine {
                 let lineContent = invocation.buffer.lines[currentLine] as! String
+                guard lineContent != String(Character.end) else { continue }
                 var startCol = 0
                 var index = lineContent.startIndex
                 var foundCharacter = false
                 while index < lineContent.endIndex {
                     if lineContent[index].isTabOrSpcase { startCol += 1 }
-                    else { foundCharacter = true; break }
+                    else if !lineContent[index].isEndOfLine { foundCharacter = true; break }
                     index = lineContent.index(after: index)
                 }
                 
                 if !foundCharacter { continue }
                 
                 let endCol = lineContent.count - 1
-                let lineSelection: XCSourceTextRange = {
-                    let it = XCSourceTextRange()
-                    it.start = XCSourceTextPosition(line: currentLine, column: startCol)
-                    it.end = XCSourceTextPosition(line: currentLine, column: endCol)
-                    return it
-                }()
+                let lineSelection = XCSourceTextRange(start: .init(line: currentLine, column: startCol),
+                                                      end: .init(line: currentLine, column: endCol))
                 splitSelections.append(lineSelection)
             }
             
