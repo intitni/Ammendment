@@ -9,7 +9,7 @@
 import Foundation
 import XcodeKit
 
-class SourceEditorCommand: NSObject, XCSourceEditorCommand {
+class MoveCursor: NSObject, XCSourceEditorCommand {
     
     enum E: Error {
         case noSelectionFound
@@ -21,8 +21,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         var lineAddition: Int {
             switch self {
-            case .moveUp: return -5
-            case .moveDown: return 5
+            case .moveUp: return 5.up
+            case .moveDown: return 5.down
             }
         }
         
@@ -32,8 +32,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         var name: String {
             switch self {
-            case .moveUp: return "Move Cursor Up 5 Lines"
-            case .moveDown: return "Move Cursor Down 5 Lines"
+            case .moveUp: return "Move Cursors Up 5 Lines"
+            case .moveDown: return "Move Cursors Down 5 Lines"
             }
         }
     }
@@ -41,24 +41,31 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         
         guard let command = CommandType(rawValue: invocation.commandIdentifier) else { fatalError() }
-        guard let firstSelection = invocation.buffer.selections.firstObject as? XCSourceTextRange else {
+        guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
             completionHandler(E.noSelectionFound)
             return
         }
         
-        let line = firstSelection.start.line
-        let column = firstSelection.start.column
-        let newSelection: XCSourceTextRange = {
-            let it = XCSourceTextRange()
-            let position = XCSourceTextPosition(line: line + command.lineAddition, column: column)
-            it.start = position
-            it.end = position
-            return it
-        }()
+        let newSelections: [XCSourceTextRange] = selections.map { this in
+            let line = this.start.line
+            let column = this.start.column
+            return {
+                let it = XCSourceTextRange()
+                let position = XCSourceTextPosition(line: line + command.lineAddition, column: column)
+                it.start = position
+                it.end = position
+                return it
+            }()
+        }
         
-        invocation.buffer.selections.setArray([newSelection])
+        invocation.buffer.selections.setArray(newSelections)
         
         completionHandler(nil)
     }
     
+}
+
+fileprivate extension Int {
+    var up: Int { return -self }
+    var down: Int { return self }
 }

@@ -14,7 +14,7 @@ class SourceEditorExtension: NSObject, XCSourceEditorExtension {
     var commandDefinitions: [[XCSourceEditorCommandDefinitionKey: Any]] {
         return SourceEditorCommand.CommandType.allCases.map { type in
             return [
-                .classNameKey: SourceEditorCommand.className(),
+                .classNameKey: MoveCursor.className(),
                 .identifierKey: type.identifier,
                 .nameKey: type.name
             ]
