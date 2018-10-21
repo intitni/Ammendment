@@ -28,3 +28,10 @@ extension String {
     }
 }
 
+extension XCSourceTextPosition {
+    init(line: Int, column: Int) {
+        self.init()
+        self.line = line
+        self.column = column
+    }
+}
