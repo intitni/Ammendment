@@ -9,11 +9,8 @@
 import Foundation
 import XcodeKit
 
+/// Move cursors up or down by 5 lines
 class MoveCursor: NSObject, XCSourceEditorCommand {
-    enum E: Error {
-        case noSelectionFound
-    }
-    
     enum Command: String, CaseIterable, CommandType {
         case moveUp = "moveCursorUp"
         case moveDown = "moveCursorDown"
@@ -40,10 +37,9 @@ class MoveCursor: NSObject, XCSourceEditorCommand {
     }
     
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
-        
         guard let command = Command(rawValue: invocation.commandIdentifier.privateIdentifier) else { fatalError() }
         guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
-            completionHandler(E.noSelectionFound)
+            completionHandler(nil)
             return
         }
         
@@ -65,11 +61,8 @@ class MoveCursor: NSObject, XCSourceEditorCommand {
     }
 }
 
+/// Add a cursor above or below the current selections
 class AddCursor: NSObject, XCSourceEditorCommand {
-    enum E: Error {
-        case noSelectionFound
-    }
-    
     enum Command: String, CaseIterable, CommandType {
         case above = "addCursorAbove"
         case below = "addCursorBelow"
@@ -89,11 +82,52 @@ class AddCursor: NSObject, XCSourceEditorCommand {
     }
     
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
-        
         guard let command = Command(rawValue: invocation.commandIdentifier.privateIdentifier) else { fatalError() }
-        guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
-            completionHandler(E.noSelectionFound)
+        guard let selections = invocation.buffer.selections as? [XCSourceTextRange],
+              let first = selections.first,
+              let last = selections.last
+        else {
+            completionHandler(nil)
             return
+        }
+        
+        switch command {
+        case .above:
+            let line = first.start.line
+            guard line > 0 else {
+                // already at top, no upper line for new cursor
+                completionHandler(nil)
+                return
+            }
+            let column = first.start.column
+            let newSelection: XCSourceTextRange = {
+                let it = XCSourceTextRange()
+                var pos = XCSourceTextPosition()
+                pos.line = line - 1
+                pos.column = column
+                it.start = pos
+                it.end = pos
+                return it
+            }()
+            invocation.buffer.selections.setArray([newSelection] + selections)
+        case .below:
+            let line = last.end.line
+            guard line < invocation.buffer.lines.count - 1 else {
+                // already at bottom, no lower line for new cursor
+                completionHandler(nil)
+                return
+            }
+            let column = last.start.column
+            let newSelection: XCSourceTextRange = {
+                let it = XCSourceTextRange()
+                var pos = XCSourceTextPosition()
+                pos.line = line + 1
+                pos.column = column
+                it.start = pos
+                it.end = pos
+                return it
+            }()
+            invocation.buffer.selections.setArray(selections + [newSelection])
         }
         
         completionHandler(nil)
