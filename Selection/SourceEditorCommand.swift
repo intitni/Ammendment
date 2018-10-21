@@ -61,22 +61,98 @@ class SelectWord: NSObject, XCSourceEditorCommand, CommandType {
     var identifier: String { return "SelectWords" }
     var name: String { return "Select Next Word" }
     
+    enum SelectType {
+        case selectWords
+        case selectNext
+    }
+    
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
             completionHandler(nil)
             return
         }
         
+        func getSelectType() -> SelectType {
+            var hasEmptySelection = false
+            var hasDifferentSelections = false
+            var previousText: String?
+            
+            for selection in selections {
+                let text = Helper.selectedText(in: invocation.buffer, in: selection)
+                if let previous = previousText, previous != text {
+                    hasDifferentSelections = true
+                }
+                previousText = text
+                
+                if selection.start.line == selection.end.line && selection.start.column == selection.end.column {
+                    hasEmptySelection = true
+                }
+                
+                if hasEmptySelection && hasDifferentSelections { break }
+            }
+            
+            if hasEmptySelection { return .selectWords }
+            if hasDifferentSelections { return .selectWords }
+            return .selectNext
+        }
+        
+        func selectWordsAtCursor() {
+            let newSelections: [XCSourceTextRange] = selections
+                .map { range in
+                    let result = Helper.findWordAtCursor(with: invocation.buffer, at: range.start)
+                    return result?.range
+                }
+                .compactMap { $0 }
+            invocation.buffer.selections.removeAllObjects()
+            invocation.buffer.selections.addObjects(from: newSelections)
+        }
+        
+        func selectNextOccurrenceOfSelection() {
+            guard let lastSelection = selections.last else { completionHandler(nil); return }
+            let start = lastSelection.start
+            let end = lastSelection.end
+            let lines = invocation.buffer.lines as! [String]
+            
+            if end.line > start.line {
+                let lastLineLeftover = String(lines[end.line].map({$0})[end.column...])
+                let leftover = [lastLineLeftover] + lines[(end.line + 1)...]
+                
+                for l in 0..<leftover.endIndex - (end.line - start.line) {
+                    // TODO: multiline select next
+                }
+            } else {
+                let lastLine = lines[end.line]
+                let lineStartIndex = lastLine.index(lastLine.startIndex, offsetBy: start.column)
+                let lineEndIndex = lastLine.index(lastLine.startIndex, offsetBy: end.column)
+                let selectedWord = String(lastLine[lineStartIndex..<lineEndIndex])
+                let lastLineLeftover = lastLine[lineEndIndex...]
+                
+                if let range = lastLineLeftover.range(of: selectedWord) {
+                    let nsrange = NSRange(range, in: lastLine)
+                    let xcrange = XCSourceTextRange(start: .init(line: start.line, column: nsrange.lowerBound),
+                                                    end: .init(line: start.line, column: nsrange.upperBound))
+                    invocation.buffer.selections.add(xcrange)
+                    return
+                }
+                
+                for index in start.line + 1 ..< lines.endIndex {
+                    let currentLine = lines[index]
+                    if let range = currentLine.range(of: selectedWord) {
+                        let nsrange = NSRange(range, in: currentLine)
+                        let xcrange = XCSourceTextRange(start: .init(line: index, column: nsrange.lowerBound),
+                                                        end: .init(line: index, column: nsrange.upperBound))
+                        invocation.buffer.selections.add(xcrange)
+                        return
+                    }
+                }
+            }
+        }
+        
+        switch getSelectType() {
+        case .selectWords: selectWordsAtCursor()
+        case .selectNext: selectNextOccurrenceOfSelection()
+        }
+        
         completionHandler(nil)
     }
-    
-}
-
-extension Character {
-    static var tab: Character { return "\t" }
-    static var space: Character { return " " }
-    static var end: Character { return "\n" }
-    
-    var isTabOrSpcase: Bool { return self == Character.tab || self == Character.space }
-    var isEndOfLine: Bool { return self == Character.end }
 }

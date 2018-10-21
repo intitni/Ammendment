@@ -28,18 +28,3 @@ extension String {
     }
 }
 
-extension XCSourceTextPosition {
-    init(line: Int, column: Int) {
-        self.init()
-        self.line = line
-        self.column = column
-    }
-}
-
-extension XCSourceTextRange {
-    convenience init(start: XCSourceTextPosition, end: XCSourceTextPosition) {
-        self.init()
-        self.start = start
-        self.end = end
-    }
-}
