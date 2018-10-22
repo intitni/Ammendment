@@ -59,10 +59,10 @@ class SelectLine: NSObject, XCSourceEditorCommand, CommandType {
 
 /// Select words where cusors in,
 /// or select next word if all selections are the same and no new cursor was added
-class SelectWord: NSObject, XCSourceEditorCommand, CommandType {
-    var commandClassName: String { return SelectWord.className() }
-    var identifier: String { return "SelectWords" }
-    var name: String { return "Select Next Word" }
+class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
+    var commandClassName: String { return SelectNext.className() }
+    var identifier: String { return "SelectNext" }
+    var name: String { return "Select Next" }
     
     enum SelectType {
         case selectWords

@@ -12,7 +12,7 @@ import XcodeKit
 class SourceEditorExtension: NSObject, XCSourceEditorExtension {
 
     var commandDefinitions: [[XCSourceEditorCommandDefinitionKey: Any]] {
-        return [SelectLine(), SelectWord()].map(makeCommandDefinition)
+        return [SelectLine(), SelectNext()].map(makeCommandDefinition)
     }
     
 }
