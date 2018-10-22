@@ -1,6 +1,7 @@
 import Foundation
 import XcodeKit
 
+/// Join selected lines in same selections into 1 line
 class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
     var commandClassName: String { return JoinLines.className() }
     var identifier: String { return "JoinLines" }
@@ -21,9 +22,7 @@ class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
             guard firstLineIndex < endLineIndex else { continue }
             
             let jointLine = join(lines: lines[firstLineIndex...endLineIndex])
-            if (firstLineIndex+1 <= endLineIndex) {
-                invocation.buffer.lines.removeObjects(at: .init(integersIn: firstLineIndex+1 ... endLineIndex))
-            }
+            invocation.buffer.lines.removeObjects(at: .init(integersIn: firstLineIndex+1 ... endLineIndex))
             invocation.buffer.lines[firstLineIndex] = jointLine
         }
         
@@ -47,6 +46,7 @@ class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
     }
 }
 
+/// Increase or decrease selected number
 class IncreaseDecrease: NSObject, XCSourceEditorCommand {
     enum Command: String, CaseIterable, CommandType {
         case increase = "IncreaseNum"
@@ -106,21 +106,8 @@ class IncreaseDecrease: NSObject, XCSourceEditorCommand {
             let end = selection.end.column
             let line = invocation.buffer.lines[lineIndex] as! String
             
-            guard let num = number(inLine: line, from: start, to: end) else { continue }
-            let selectedText = selectedTrimmedText(inLine: line, from: start, to: end)
-            
-            let updatedNum: Number
-            switch command {
-            case .increase: updatedNum = num.increased()
-            case .decrease: updatedNum = num.decreased()
-            }
-            let index = indexFactory(in: line)
-            let newText = updatedNum.text
-            let newLine = line.replacingOccurrences(of: selectedText,
-                                                    with: newText,
-                                                    options: [],
-                                                    range: index(start)..<index(end))
-            selection.end = .init(line: lineIndex, column: end + (newText.count - selectedText.count))
+            guard let (newLine, newEnd) = updating(line: line, with: command, from: start, to: end) else { continue }
+            selection.end = .init(line: lineIndex, column: newEnd)
             invocation.buffer.lines.replaceObject(at: lineIndex, with: newLine)
         }
         
@@ -138,5 +125,23 @@ class IncreaseDecrease: NSObject, XCSourceEditorCommand {
         assert(end >= start)
         let index = indexFactory(in: line)
         return String(line[index(start)..<index(end)]).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private func updating(line: String, with command: Command, from start: Int, to end: Int) -> (newLine: String, newEnd: Int)? {
+        guard let num = number(inLine: line, from: start, to: end) else { return nil }
+        let selectedText = selectedTrimmedText(inLine: line, from: start, to: end)
+        
+        let updatedNum: Number
+        switch command {
+        case .increase: updatedNum = num.increased()
+        case .decrease: updatedNum = num.decreased()
+        }
+        let index = indexFactory(in: line)
+        let newText = updatedNum.text
+        return (line.replacingOccurrences(of: selectedText,
+                                          with: newText,
+                                          options: [],
+                                          range: index(start)..<index(end)),
+                end + (newText.count - selectedText.count))
     }
 }
