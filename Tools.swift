@@ -1,6 +1,10 @@
 import Foundation
 import XcodeKit
 
+func indexFactory(in line: String) -> (_ offset: Int) -> String.Index {
+    return { (offset: Int) -> String.Index in return line.index(line.startIndex, offsetBy: offset) }
+}
+
 extension XCSourceTextPosition {
     init(line: Int, column: Int) {
         self.init()
