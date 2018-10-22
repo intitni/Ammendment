@@ -73,7 +73,7 @@ enum Helper {
                 }
                 return string
             }()
-            + String((buffer.lines[range.end.line] as! String).map({$0})[..<range.end.column])
+            + String((buffer.lines[range.end.line] as! String).map({$0})[...range.end.column])
     }
 }
 

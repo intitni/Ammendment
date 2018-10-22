@@ -20,16 +20,23 @@ class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
             return
         }
         
+        let lines = invocation.buffer.lines as! [String]
+        
         for selection in selections.reversed() {
             let firstLineIndex = selection.start.line
             let endLineIndex = selection.end.line
             
-            let lines = [(invocation.buffer.lines[firstLineIndex] as! String).replacingOccurrences(of: "\(Character.end)", with: "")]
-                + (invocation.buffer.lines.objects(at: .init(firstLineIndex+1 ... endLineIndex)) as! [String]).map { return $0
+            guard endLineIndex > firstLineIndex else { continue }
+            
+            let firstLine = lines[firstLineIndex]
+                .replacingOccurrences(of: "\(Character.end)", with: "")
+            let otherSelectedLines = lines[firstLineIndex+1 ... endLineIndex]
+                .map { return $0
                     .replacingOccurrences(of: "\(Character.end)", with: "")
                     .trimmingCharacters(in: .whitespaces)
-            }
-            let jointLine = lines.joined(separator: " ")
+                }
+            let newLines = [firstLine] + otherSelectedLines
+            let jointLine = newLines.joined(separator: " ")
             invocation.buffer.lines.removeObjects(at: .init(integersIn: firstLineIndex+1 ... endLineIndex))
             invocation.buffer.lines[firstLineIndex] = jointLine
         }
