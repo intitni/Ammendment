@@ -1,11 +1,3 @@
-//
-//  SourceEditorCommand.swift
-//  Selection
-//
-//  Created by Shangxin Guo on 2018/10/18.
-//  Copyright © 2018 Shangxin Guo. All rights reserved.
-//
-
 import Foundation
 import XcodeKit
 
