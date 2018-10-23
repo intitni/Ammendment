@@ -40,7 +40,7 @@ class IncreaseDecreaseHelper {
     
     func selectedTrimmedText(inLine line: String, from start: Int, to end: Int) -> String {
         assert(end >= start)
-        let index = indexFactory(in: line)
+        let index = line.indexFactory
         return String(line[index(start)..<index(end)]).trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
@@ -49,7 +49,7 @@ class IncreaseDecreaseHelper {
         let selectedText = selectedTrimmedText(inLine: line, from: start, to: end)
         
         let updatedNum: Number = increase ? num.increased() : num.decreased()
-        let index = indexFactory(in: line)
+        let index = line.indexFactory
         let newText = updatedNum.text
         return (line.replacingOccurrences(of: selectedText,
                                           with: newText,

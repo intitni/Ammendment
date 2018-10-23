@@ -1,7 +1,9 @@
 import Foundation
 
-func indexFactory(in line: String) -> (_ offset: Int) -> String.Index {
-    return { (offset: Int) -> String.Index in return line.index(line.startIndex, offsetBy: offset) }
+extension String {
+    var indexFactory: (_ offset: Int) -> String.Index {
+        return { (offset: Int) -> String.Index in return self.index(self.startIndex, offsetBy: offset) }
+    }
 }
 
 struct Position {
