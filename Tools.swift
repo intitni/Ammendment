@@ -1,38 +1,30 @@
 import Foundation
-import XcodeKit
 
 func indexFactory(in line: String) -> (_ offset: Int) -> String.Index {
     return { (offset: Int) -> String.Index in return line.index(line.startIndex, offsetBy: offset) }
 }
 
-extension XCSourceTextPosition {
-    init(line: Int, column: Int) {
-        self.init()
-        self.line = line
-        self.column = column
-    }
+struct Position {
+    var line: Int
+    var column: Int
 }
 
-extension XCSourceTextRange {
-    convenience init(start: XCSourceTextPosition, end: XCSourceTextPosition) {
-        self.init()
-        self.start = start
-        self.end = end
-    }
+struct TextRange {
+    var start: Position
+    var end: Position
 }
 
 enum Helper {
     struct WordOccurrence {
         let word: String
-        let range: XCSourceTextRange
+        let range: TextRange
     }
     
     static func findWordAtCursor(
-        with buffer: XCSourceTextBuffer,
-        at position: XCSourceTextPosition
+        with lines: [String],
+        at position: Position
     ) -> WordOccurrence? {
-        let lines = buffer.lines
-        let targetLine = (lines[position.line] as! String).map { $0 }
+        let targetLine = lines[position.line].map { $0 }
         let currentChar = targetLine[position.column]
         guard currentChar.isCharacter else { return nil }
         
@@ -65,19 +57,18 @@ enum Helper {
                          end: .init(line: position.line, column: endIndex)))
     }
     
-    static func selectedText(in buffer: XCSourceTextBuffer, in range: XCSourceTextRange) -> String {
+    static func selectedText(in lines: [String], in range: TextRange) -> String {
         if range.start.line == range.end.line {
-            return String((buffer.lines[range.start.line] as! String).map({$0})[range.start.column..<range.end.column])
+            return String(lines[range.start.line].map({$0})[range.start.column..<range.end.column])
         }
-        return String((buffer.lines[range.start.line] as! String).map({$0})[range.start.column...])
+        return String(lines[range.start.line].map({$0})[range.start.column...])
             + { var string = ""
                 for i in range.start.line + 1 ..< range.end.line {
-                    let s = buffer.lines[i] as! String
-                    string += s
+                    string += lines[i]
                 }
                 return string
             }()
-            + String((buffer.lines[range.end.line] as! String).map({$0})[...range.end.column])
+            + String(lines[range.end.line].map({$0})[...range.end.column])
     }
 }
 

@@ -81,7 +81,7 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
             var previousText: String?
             
             for selection in selections {
-                let text = Helper.selectedText(in: invocation.buffer, in: selection)
+                let text = Helper.selectedText(in: invocation.buffer.lines as! [String], in: selection.textRange)
                 if let previous = previousText, previous != text {
                     hasDifferentSelections = true
                 }
@@ -102,8 +102,8 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
         func selectWordsAtCursor() {
             let newSelections: [XCSourceTextRange] = selections
                 .map { range in
-                    let result = Helper.findWordAtCursor(with: invocation.buffer, at: range.start)
-                    return result?.range
+                    let result = Helper.findWordAtCursor(with: invocation.buffer.lines as! [String], at: range.start.position)
+                    return (result?.range).flatMap(XCSourceTextRange.init(range:))
                 }
                 .compactMap { $0 }
             invocation.buffer.selections.removeAllObjects()
