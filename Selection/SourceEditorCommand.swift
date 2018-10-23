@@ -56,10 +56,7 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
     var identifier: String { return "SelectNext" }
     var name: String { return "Select Next" }
     
-    enum SelectType {
-        case selectWords
-        case selectNext
-    }
+    private typealias SelectType = SelectNextHelper.SelectType
     
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
@@ -67,83 +64,39 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
             return
         }
         
-        func getSelectType() -> SelectType {
-            var hasEmptySelection = false
-            var hasDifferentSelections = false
-            var previousText: String?
-            
-            for selection in selections {
-                let text = Helper.selectedText(in: invocation.buffer.lines as! [String], in: selection.textRange)
-                if let previous = previousText, previous != text {
-                    hasDifferentSelections = true
-                }
-                previousText = text
-                
-                if selection.start.line == selection.end.line && selection.start.column == selection.end.column {
-                    hasEmptySelection = true
-                }
-                
-                if hasEmptySelection && hasDifferentSelections { break }
-            }
-            
-            if hasEmptySelection { return .selectWords }
-            if hasDifferentSelections { return .selectWords }
-            return .selectNext
-        }
+        let buffer = invocation.buffer
+        let lines = buffer.lines as! [String]
         
+        let helper = SelectNextHelper()
+
         func selectWordsAtCursor() {
-            let newSelections: [XCSourceTextRange] = selections
-                .map { range in
-                    let result = Helper.findWordAtCursor(with: invocation.buffer.lines as! [String], at: range.start.position)
-                    return (result?.range).flatMap(XCSourceTextRange.init(range:))
-                }
-                .compactMap { $0 }
+            let newSelections = helper.getSelectionsCoveringWordsUnderCursors(
+                lines: lines,
+                selections: selections.map({$0.textRange}))
+                    .map(XCSourceTextRange.init(range:))
+            
             invocation.buffer.selections.removeAllObjects()
             invocation.buffer.selections.addObjects(from: newSelections)
         }
         
         func selectNextOccurrenceOfSelection() {
             guard let lastSelection = selections.last else { completionHandler(nil); return }
+            let lastRange = lastSelection.textRange
             let start = lastSelection.start
             let end = lastSelection.end
             let lines = invocation.buffer.lines as! [String]
-            
             if end.line > start.line {
-                let lastLineLeftover = String(lines[end.line].map({$0})[end.column...])
-                let leftover = [lastLineLeftover] + lines[(end.line + 1)...]
-                
-                for l in 0..<leftover.endIndex - (end.line - start.line) {
-                    // TODO: multiline select next
-                }
+                guard let range = helper.getNextOccurrenceOfMultiLine(inLines: lines, lastSelection: lastRange)
+                    else {return}
+                invocation.buffer.selections.add(range)
             } else {
-                let lastLine = lines[end.line]
-                let lineStartIndex = lastLine.index(lastLine.startIndex, offsetBy: start.column)
-                let lineEndIndex = lastLine.index(lastLine.startIndex, offsetBy: end.column)
-                let selectedWord = String(lastLine[lineStartIndex..<lineEndIndex])
-                let lastLineLeftover = lastLine[lineEndIndex...]
-                
-                if let range = lastLineLeftover.range(of: selectedWord) {
-                    let nsrange = NSRange(range, in: lastLine)
-                    let xcrange = XCSourceTextRange(start: .init(line: start.line, column: nsrange.lowerBound),
-                                                    end: .init(line: start.line, column: nsrange.upperBound))
-                    invocation.buffer.selections.add(xcrange)
-                    return
-                }
-                
-                for index in start.line + 1 ..< lines.endIndex {
-                    let currentLine = lines[index]
-                    if let range = currentLine.range(of: selectedWord) {
-                        let nsrange = NSRange(range, in: currentLine)
-                        let xcrange = XCSourceTextRange(start: .init(line: index, column: nsrange.lowerBound),
-                                                        end: .init(line: index, column: nsrange.upperBound))
-                        invocation.buffer.selections.add(xcrange)
-                        return
-                    }
-                }
+                guard let range = helper.getNextOccurrenceOfSingleLine(inLines: lines, lastSelection: lastRange)
+                    else {return}
+                invocation.buffer.selections.add(range)
             }
         }
         
-        switch getSelectType() {
+        switch helper.getSelectType(lines: lines, selections: selections.map {$0.textRange}) {
         case .selectWords: selectWordsAtCursor()
         case .selectNext: selectNextOccurrenceOfSelection()
         }

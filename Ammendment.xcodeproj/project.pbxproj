@@ -32,6 +32,8 @@
 		13810115217F640A00369C12 /* XcodeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810113217F63DF00369C12 /* XcodeKit.swift */; };
 		13810116217F640B00369C12 /* XcodeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810113217F63DF00369C12 /* XcodeKit.swift */; };
 		13810118217F6AD200369C12 /* ToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810117217F6AD200369C12 /* ToolsTests.swift */; };
+		1381011B217F6BE400369C12 /* IncreaseDecreaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810119217F6BCC00369C12 /* IncreaseDecreaseTests.swift */; };
+		1381011D217F717C00369C12 /* SelectNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381011C217F717C00369C12 /* SelectNext.swift */; };
 		13B8A4E8217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
 		13B8A4E9217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
 		13B8A4EA217C7C1700095408 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4E6217C7BBA00095408 /* CommandType.swift */; };
@@ -117,6 +119,8 @@
 		1381010D217F624F00369C12 /* IncreaseDecrease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreaseDecrease.swift; sourceTree = "<group>"; };
 		13810113217F63DF00369C12 /* XcodeKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeKit.swift; sourceTree = "<group>"; };
 		13810117217F6AD200369C12 /* ToolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsTests.swift; sourceTree = "<group>"; };
+		13810119217F6BCC00369C12 /* IncreaseDecreaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreaseDecreaseTests.swift; sourceTree = "<group>"; };
+		1381011C217F717C00369C12 /* SelectNext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNext.swift; sourceTree = "<group>"; };
 		13B8A4E6217C7BBA00095408 /* CommandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
 		13B8A4EB217CB1A300095408 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +173,7 @@
 				1356000A2178D3D000BD53AE /* SourceEditorExtension.swift */,
 				1356000C2178D3D000BD53AE /* SourceEditorCommand.swift */,
 				1381010D217F624F00369C12 /* IncreaseDecrease.swift */,
+				13810119217F6BCC00369C12 /* IncreaseDecreaseTests.swift */,
 				138100FB217EEBAB00369C12 /* JoinLines.swift */,
 				138100F9217EEB9F00369C12 /* JoinLinesTest.swift */,
 				1356000E2178D3D000BD53AE /* Info.plist */,
@@ -231,6 +236,7 @@
 			children = (
 				1356FFE32178D31C00BD53AE /* SourceEditorExtension.swift */,
 				1356FFE52178D31C00BD53AE /* SourceEditorCommand.swift */,
+				1381011C217F717C00369C12 /* SelectNext.swift */,
 				1356FFE72178D31C00BD53AE /* Info.plist */,
 				1356FFE82178D31C00BD53AE /* Selection.entitlements */,
 			);
@@ -474,6 +480,7 @@
 				1356FFE42178D31C00BD53AE /* SourceEditorExtension.swift in Sources */,
 				1356FFE62178D31C00BD53AE /* SourceEditorCommand.swift in Sources */,
 				13810115217F640A00369C12 /* XcodeKit.swift in Sources */,
+				1381011D217F717C00369C12 /* SelectNext.swift in Sources */,
 				13B8A4ED217CB50D00095408 /* Tools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1381010B217EEC3100369C12 /* JoinLinesTest.swift in Sources */,
+				1381011B217F6BE400369C12 /* IncreaseDecreaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
