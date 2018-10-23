@@ -25,6 +25,7 @@ class IncreaseDecreaseHelper {
             case let .floatingPoint(val):
                 let formatter = NumberFormatter()
                 formatter.minimumFractionDigits = 1
+                formatter.maximumFractionDigits = 10
                 formatter.minimumIntegerDigits = 1
                 return "\(formatter.string(from: .init(value: val)) ?? "")"
             }
