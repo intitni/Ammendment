@@ -19,13 +19,22 @@ class SelectNextTests: XCTestCase {
         let helper = SelectNextHelper()
         XCTAssertTrue(helper.matchNextSelection(
             ["   hello!\n",
+             "  world  !\n"],
+            toPreviousLines:
+            ["   hello!\n",
+             "  world  !\n"],
+            startColumn: 0, endColumn: 9
+        ))
+        
+        XCTAssertTrue(helper.matchNextSelection(
+            ["   hello!\n",
              "pikachu",
              "  world  !\n"],
             toPreviousLines:
-            ["hello!\n",
+            ["   hello!\n",
              "pikachu",
              "  world  !\n"],
-            startColumn: 0, endColumn: 10
+            startColumn: 0, endColumn: 9
         ))
         
         XCTAssertTrue(helper.matchNextSelection(

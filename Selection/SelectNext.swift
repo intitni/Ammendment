@@ -95,7 +95,7 @@ class SelectNextHelper {
         return nil
     }
     
-    private func matchNextSelection(
+    func matchNextSelection(
         _ next: ArraySlice<String>,
         toPreviousLines previous: ArraySlice<String>,
         startColumn: Int,
@@ -105,7 +105,7 @@ class SelectNextHelper {
             let previousLastLine = previous.last,
             let nextFirstLine = next.first,
             let nextLastLine = next.last,
-            startColumn > 0, endColumn <= previousFirstLine.count
+            startColumn >= 0, endColumn <= previousFirstLine.count
             else { return false }
         
         let previousFirstLineSelectedText = previousFirstLine[previousFirstLine.indexFactory(startColumn)...]
@@ -114,8 +114,8 @@ class SelectNextHelper {
         guard nextFirstLine.hasSuffix(previousFirstLineSelectedText) else { return false }
         guard nextLastLine.hasPrefix(previousLastLineSelectedText) else { return false }
         
-        for i in next.startIndex + 1 ..< next.endIndex - 1 {
-            if next[i] != previous[i] { return false }
+        for i in 1 ..< next.endIndex - next.startIndex - 1 {
+            if next[next.startIndex + i] != previous[previous.startIndex + i] { return false }
         }
         
         return true
