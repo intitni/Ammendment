@@ -43,9 +43,12 @@ class SelectNextHelper {
     func getNextOccurrenceOfSingleLine(inLines lines: [String], lastSelection: TextRange) -> TextRange? {
         let start = lastSelection.start
         let end = lastSelection.end
+        assert(end.line == start.line)
+        
         let lastLine = lines[end.line]
-        let lineStartIndex = lastLine.index(lastLine.startIndex, offsetBy: start.column)
-        let lineEndIndex = lastLine.index(lastLine.startIndex, offsetBy: end.column)
+        
+        let lineStartIndex = lastLine.indexFactory(start.column)
+        let lineEndIndex = lastLine.indexFactory(end.column)
         let selectedWord = String(lastLine[lineStartIndex..<lineEndIndex])
         let lastLineLeftover = lastLine[lineEndIndex...]
         
@@ -72,12 +75,45 @@ class SelectNextHelper {
     func getNextOccurrenceOfMultiLine(inLines lines: [String], lastSelection: TextRange) -> TextRange? {
         let start = lastSelection.start
         let end = lastSelection.end
-        let lastLineLeftover = String(lines[end.line].map({$0})[end.column...])
-        let leftover = [lastLineLeftover] + lines[(end.line + 1)...]
+        assert(end.line > start.line)
         
-        for l in 0..<leftover.endIndex - (end.line - start.line) {
-            // TODO: multiline select next
+        let lineHeight = end.line - start.line
+        for startLineIndex in end.line ..< lines.endIndex - lineHeight {
+            let endLineIndex = startLineIndex + lineHeight
+            
+            let match = matchNextSelection(lines[startLineIndex...endLineIndex],
+                                            to: lines[start.line...end.line],
+                                            startColumn: start.column,
+                                            endColumn: end.column)
+            guard match else { continue }
+            let firstLineLength = lines[startLineIndex].count
+            let selectedFirstLineTextLength = lines[start.line].count - start.column
+            return TextRange(start: .init(line: startLineIndex, column: firstLineLength - selectedFirstLineTextLength),
+                             end: .init(line: endLineIndex, column: end.column))
         }
+        
         return nil
+    }
+    
+    func matchNextSelection(_ next: ArraySlice<String>, to previous: ArraySlice<String>, startColumn: Int, endColumn: Int) -> Bool {
+        guard next.count == previous.count,
+            let previousFirstLine = previous.first,
+            let previousLastLine = previous.last,
+            let nextFirstLine = next.first,
+            let nextLastLine = next.last,
+            startColumn > 0, endColumn <= previousFirstLine.count
+            else { return false }
+        
+        let previousFirstLineSelectedText = previousFirstLine[previousFirstLine.indexFactory(startColumn)...]
+        let previousLastLineSelectedText = previousLastLine[..<previousLastLine.indexFactory(endColumn)]
+        
+        guard nextFirstLine.hasSuffix(previousFirstLineSelectedText) else { return false }
+        guard nextLastLine.hasPrefix(previousLastLineSelectedText) else { return false }
+        
+        for i in next.startIndex + 1 ..< next.endIndex - 1 {
+            if next[i] != previous[i] { return false }
+        }
+        
+        return true
     }
 }

@@ -56,8 +56,6 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
     var identifier: String { return "SelectNext" }
     var name: String { return "Select Next" }
     
-    private typealias SelectType = SelectNextHelper.SelectType
-    
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         guard let selections = invocation.buffer.selections as? [XCSourceTextRange] else {
             completionHandler(nil)
@@ -88,11 +86,11 @@ class SelectNext: NSObject, XCSourceEditorCommand, CommandType {
             if end.line > start.line {
                 guard let range = helper.getNextOccurrenceOfMultiLine(inLines: lines, lastSelection: lastRange)
                     else {return}
-                invocation.buffer.selections.add(range)
+                invocation.buffer.selections.add(XCSourceTextRange(range: range))
             } else {
                 guard let range = helper.getNextOccurrenceOfSingleLine(inLines: lines, lastSelection: lastRange)
                     else {return}
-                invocation.buffer.selections.add(range)
+                invocation.buffer.selections.add(XCSourceTextRange(range: range))
             }
         }
         

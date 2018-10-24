@@ -40,6 +40,7 @@
 		13B8A4ED217CB50D00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
 		13B8A4EE217CB50D00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
 		13B8A4EF217CB50E00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
+		13E69FED2180BB42003F741C /* SelectNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381011C217F717C00369C12 /* SelectNext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -467,6 +468,7 @@
 			files = (
 				1356FFCD2178D2FF00BD53AE /* AppDelegate.swift in Sources */,
 				13810110217F625A00369C12 /* IncreaseDecrease.swift in Sources */,
+				13E69FED2180BB42003F741C /* SelectNext.swift in Sources */,
 				1381010C217F623800369C12 /* JoinLines.swift in Sources */,
 				13810111217F63C600369C12 /* Tools.swift in Sources */,
 			);
