@@ -82,7 +82,7 @@ class SelectNextHelper {
             let endLineIndex = startLineIndex + lineHeight
             
             let match = matchNextSelection(lines[startLineIndex...endLineIndex],
-                                            to: lines[start.line...end.line],
+                                            toPreviousLines: lines[start.line...end.line],
                                             startColumn: start.column,
                                             endColumn: end.column)
             guard match else { continue }
@@ -95,7 +95,11 @@ class SelectNextHelper {
         return nil
     }
     
-    func matchNextSelection(_ next: ArraySlice<String>, to previous: ArraySlice<String>, startColumn: Int, endColumn: Int) -> Bool {
+    private func matchNextSelection(
+        _ next: ArraySlice<String>,
+        toPreviousLines previous: ArraySlice<String>,
+        startColumn: Int,
+        endColumn: Int) -> Bool {
         guard next.count == previous.count,
             let previousFirstLine = previous.first,
             let previousLastLine = previous.last,
