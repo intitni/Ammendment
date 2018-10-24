@@ -188,10 +188,7 @@
 		1356FFC02178D2FF00BD53AE = {
 			isa = PBXGroup;
 			children = (
-				13B8A4EB217CB1A300095408 /* Tools.swift */,
-				13810117217F6AD200369C12 /* ToolsTests.swift */,
-				13810113217F63DF00369C12 /* XcodeKit.swift */,
-				13B8A4E6217C7BBA00095408 /* CommandType.swift */,
+				13DBFAC22180C3FB0000C170 /* Shared */,
 				1356FFCB2178D2FF00BD53AE /* Ammendment */,
 				1356FFE22178D31C00BD53AE /* Selection */,
 				1356FFF62178D33300BD53AE /* Cursor */,
@@ -264,6 +261,17 @@
 				13810105217EEC0500369C12 /* Info.plist */,
 			);
 			path = AmmendmentTests;
+			sourceTree = "<group>";
+		};
+		13DBFAC22180C3FB0000C170 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				13B8A4EB217CB1A300095408 /* Tools.swift */,
+				13810117217F6AD200369C12 /* ToolsTests.swift */,
+				13810113217F63DF00369C12 /* XcodeKit.swift */,
+				13B8A4E6217C7BBA00095408 /* CommandType.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
