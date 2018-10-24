@@ -1,4 +1,4 @@
-Ammendment is a Xcode Source Extension containing a set of features that I personally use.
+Ammendment is an Xcode Source Extension containing a set of features that I personally use.
 
 # Features
 
