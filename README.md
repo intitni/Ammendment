@@ -10,11 +10,9 @@ Select lines where cursors at.
 
 ### Select Next
 
-Defaultly, it will select the word next to cusor. Calling this command again will select the next occurrence of previous selected text (works with multiline selections too).
+A combination of "select word next to cursor" and "select next occurrence".
 
-If multiple selections exist, but not all of the selected texts are the same, calling the command again does nothing.
-
-If multiple cursors are added, it will select all words next to cursors.
+(I didn't know Find > Select Next Occurrence exists...But at least this version works more like that of vscode since it also does the first-step selection) 
 
 ## Cursor
 
