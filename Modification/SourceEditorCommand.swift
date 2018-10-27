@@ -96,8 +96,8 @@ class RemoveCommnetAtTop: NSObject, XCSourceEditorCommand, CommandType {
 /// Save / Apply stash
 class Stash: NSObject, XCSourceEditorCommand {
     enum Command: String, CaseIterable, CommandType {
-        case save = "Save"
-        case apply = "Apply"
+        case save = "SaveStash"
+        case apply = "ApplyStash"
         
         var commandClassName: String { return Stash.className() }
         var identifier: String { return rawValue }
