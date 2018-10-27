@@ -44,6 +44,7 @@
 		13DBFAC02180C3410000C170 /* SelectNextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139CBF652180C09C005BE8ED /* SelectNextTests.swift */; };
 		13DBFAC12180C3820000C170 /* ToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810117217F6AD200369C12 /* ToolsTests.swift */; };
 		13E69FED2180BB42003F741C /* SelectNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381011C217F717C00369C12 /* SelectNext.swift */; };
+		13F79A962184C7F800CBE46A /* RemoveCommentAtTopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F79A952184C7F800CBE46A /* RemoveCommentAtTopTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 		13B8A4EB217CB1A300095408 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCommentAtTop.swift; sourceTree = "<group>"; };
 		13DBFAC32180C4230000C170 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		13F79A952184C7F800CBE46A /* RemoveCommentAtTopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCommentAtTopTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				1356000A2178D3D000BD53AE /* SourceEditorExtension.swift */,
 				1356000C2178D3D000BD53AE /* SourceEditorCommand.swift */,
 				13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */,
+				13F79A952184C7F800CBE46A /* RemoveCommentAtTopTests.swift */,
 				1381010D217F624F00369C12 /* IncreaseDecrease.swift */,
 				13810119217F6BCC00369C12 /* IncreaseDecreaseTests.swift */,
 				138100FB217EEBAB00369C12 /* JoinLines.swift */,
@@ -523,6 +526,7 @@
 			files = (
 				1381010B217EEC3100369C12 /* JoinLinesTest.swift in Sources */,
 				1381011B217F6BE400369C12 /* IncreaseDecreaseTests.swift in Sources */,
+				13F79A962184C7F800CBE46A /* RemoveCommentAtTopTests.swift in Sources */,
 				13DBFAC02180C3410000C170 /* SelectNextTests.swift in Sources */,
 				13DBFAC12180C3820000C170 /* ToolsTests.swift in Sources */,
 			);
