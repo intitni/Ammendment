@@ -4,8 +4,9 @@ import XcodeKit
 class SourceEditorExtension: NSObject, XCSourceEditorExtension {
 
     var commandDefinitions: [[XCSourceEditorCommandDefinitionKey: Any]] {
-        return [JoinLines()].map(makeCommandDefinition)
+        return [RemoveCommnetAtTop(), JoinLines()].map(makeCommandDefinition)
              + IncreaseDecrease.Command.allCases.map(makeCommandDefinition)
+             + Stash.Command.allCases.map(makeCommandDefinition)
     }
     
 }

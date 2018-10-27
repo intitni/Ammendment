@@ -72,7 +72,7 @@ class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
     }
 }
 
-// Remove auto generated comments at top
+/// Remove auto generated comments at top
 class RemoveCommnetAtTop: NSObject, XCSourceEditorCommand, CommandType {
     var commandClassName: String { return RemoveCommnetAtTop.className() }
     var identifier: String { return "RemoveCommnetAtTop" }
@@ -89,6 +89,49 @@ class RemoveCommnetAtTop: NSObject, XCSourceEditorCommand, CommandType {
         
         invocation.buffer.lines.removeObjects(in: .init(location: 0, length: lastLineToRemoveIndex))
         
+        completionHandler(nil)
+    }
+}
+
+/// Save / Apply stash
+class Stash: NSObject, XCSourceEditorCommand {
+    enum Command: String, CaseIterable, CommandType {
+        case save = "Save"
+        case apply = "Apply"
+        
+        var commandClassName: String { return Stash.className() }
+        var identifier: String { return rawValue }
+        var name: String {
+            switch self {
+            case .save: return "Save Stash"
+            case .apply: return "Apply Stash"
+            }
+        }
+    }
+    
+    enum CommandError: Error, LocalizedError {
+        case noStash
+        
+        var localizedDescription: String {
+            return "No stash found."
+        }
+    }
+    
+    static var stashed: [String]?
+    
+    func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void) {
+        guard let command = Command(rawValue: invocation.commandIdentifier.privateIdentifier) else { fatalError() }
+        switch command {
+        case .save: Stash.stashed = invocation.buffer.lines as? [String]
+        case .apply:
+            guard let s = Stash.stashed else {
+                completionHandler(CommandError.noStash)
+                return
+            }
+            invocation.buffer.lines.removeAllObjects()
+            invocation.buffer.lines.addObjects(from: s)
+            Stash.stashed = nil
+        }
         completionHandler(nil)
     }
 }
