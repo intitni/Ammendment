@@ -87,7 +87,7 @@ class RemoveCommnetAtTop: NSObject, XCSourceEditorCommand, CommandType {
             return
         }
         
-        invocation.buffer.lines.removeObjects(in: .init(location: 0, length: lastLineToRemoveIndex))
+        invocation.buffer.lines.removeObjects(in: .init(location: 0, length: lastLineToRemoveIndex + 1))
         
         completionHandler(nil)
     }
