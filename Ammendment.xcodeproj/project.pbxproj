@@ -39,6 +39,8 @@
 		13B8A4ED217CB50D00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
 		13B8A4EE217CB50D00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
 		13B8A4EF217CB50E00095408 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8A4EB217CB1A300095408 /* Tools.swift */; };
+		13CAF4A72184B28D006C4851 /* RemoveCommentAtTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */; };
+		13CAF4A92184B4D0006C4851 /* RemoveCommentAtTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */; };
 		13DBFAC02180C3410000C170 /* SelectNextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139CBF652180C09C005BE8ED /* SelectNextTests.swift */; };
 		13DBFAC12180C3820000C170 /* ToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13810117217F6AD200369C12 /* ToolsTests.swift */; };
 		13E69FED2180BB42003F741C /* SelectNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1381011C217F717C00369C12 /* SelectNext.swift */; };
@@ -126,6 +128,7 @@
 		139CBF652180C09C005BE8ED /* SelectNextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNextTests.swift; sourceTree = "<group>"; };
 		13B8A4E6217C7BBA00095408 /* CommandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
 		13B8A4EB217CB1A300095408 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCommentAtTop.swift; sourceTree = "<group>"; };
 		13DBFAC32180C4230000C170 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +179,7 @@
 			children = (
 				1356000A2178D3D000BD53AE /* SourceEditorExtension.swift */,
 				1356000C2178D3D000BD53AE /* SourceEditorCommand.swift */,
+				13CAF4A62184B28D006C4851 /* RemoveCommentAtTop.swift */,
 				1381010D217F624F00369C12 /* IncreaseDecrease.swift */,
 				13810119217F6BCC00369C12 /* IncreaseDecreaseTests.swift */,
 				138100FB217EEBAB00369C12 /* JoinLines.swift */,
@@ -468,6 +472,7 @@
 				1381010E217F624F00369C12 /* IncreaseDecrease.swift in Sources */,
 				1356000B2178D3D000BD53AE /* SourceEditorExtension.swift in Sources */,
 				138100FC217EEBAB00369C12 /* JoinLines.swift in Sources */,
+				13CAF4A72184B28D006C4851 /* RemoveCommentAtTop.swift in Sources */,
 				13810114217F63DF00369C12 /* XcodeKit.swift in Sources */,
 				1356000D2178D3D000BD53AE /* SourceEditorCommand.swift in Sources */,
 				13B8A4EF217CB50E00095408 /* Tools.swift in Sources */,
@@ -478,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13CAF4A92184B4D0006C4851 /* RemoveCommentAtTop.swift in Sources */,
 				1356FFCD2178D2FF00BD53AE /* AppDelegate.swift in Sources */,
 				13810110217F625A00369C12 /* IncreaseDecrease.swift in Sources */,
 				13E69FED2180BB42003F741C /* SelectNext.swift in Sources */,

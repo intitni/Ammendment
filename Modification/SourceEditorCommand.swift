@@ -71,3 +71,24 @@ class JoinLines: NSObject, XCSourceEditorCommand, CommandType {
         completionHandler(nil)
     }
 }
+
+// Remove auto generated comments at top
+class RemoveCommnetAtTop: NSObject, XCSourceEditorCommand, CommandType {
+    var commandClassName: String { return RemoveCommnetAtTop.className() }
+    var identifier: String { return "RemoveCommnetAtTop" }
+    var name: String { return "Remove Commnets At Top" }
+    
+    func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
+        var lines: [String] { return invocation.buffer.lines as! [String] }
+        
+        let helper = RemoveCommentAtTopHelper()
+        guard let lastLineToRemoveIndex = helper.findEndLineIndexOfTopComment(from: lines) else {
+            completionHandler(nil)
+            return
+        }
+        
+        invocation.buffer.lines.removeObjects(in: .init(location: 0, length: lastLineToRemoveIndex))
+        
+        completionHandler(nil)
+    }
+}
