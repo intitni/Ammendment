@@ -28,7 +28,7 @@ enum Helper {
     ) -> WordOccurrence? {
         let targetLine = lines[position.line].map { $0 }
         let currentChar = targetLine[position.column]
-        let startPosition = currentChar.isCharacter
+        _ = currentChar.isCharacter
             ? position
             : Position(line: position.line, column: max(position.column - 1, 0))
         guard currentChar.isCharacter else { return nil }

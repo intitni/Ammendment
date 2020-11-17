@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 @testable import Ammendment
 
-typealias Number = IncreaseDecreaseHelper.Number
+public typealias Number = IncreaseDecreaseHelper.Number
 extension Number: Equatable {
     public static func ==(lhs: Number, rhs: Number) -> Bool {
         switch (lhs, rhs) {
