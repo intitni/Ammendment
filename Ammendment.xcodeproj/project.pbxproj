@@ -430,7 +430,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "Shangxin Guo";
 				TargetAttributes = {
 					135600062178D3D000BD53AE = {
@@ -629,6 +629,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Cursor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -651,6 +652,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Cursor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -673,6 +675,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Modification/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -695,6 +698,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = Modification/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -837,6 +841,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Ammendment/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -859,6 +864,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Ammendment/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -879,6 +885,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Selection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -901,6 +908,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5YKZ4Y3DAW;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Selection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
